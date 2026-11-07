@@ -3,208 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invois Rasmi - Teman & Penjagaan</title>
-    <!-- Tailwind CSS & FontAwesome Icons -->
+    <title>Teman & Penjagaan (T&P) Booking App</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .bg-brand-gold { background-color: #D4AF37; }
-        .bg-brand-gold-dark { background-color: #AA820A; }
-        .text-brand-gold { color: #D4AF37; }
-        .text-brand-gold-dark { color: #AA820A; }
-        .border-brand-gold { border-color: #D4AF37; }
-        
-        .bg-brand-blue { background-color: #0F2C59; }
-        .text-brand-blue { color: #0F2C59; }
-        .border-brand-blue { border-color: #0F2C59; }
-
-        .bg-brand-red { background-color: #C00000; }
-        .text-brand-red { color: #C00000; }
-        .border-brand-red { border-color: #C00000; }
-
-        /* Stylings untuk radio card visual dengan elemen Dominan Gold */
-        input[type="radio"]:checked + div {
-            border-color: #D4AF37;
-            background-color: #FFFDF0;
-            color: #0F2C59;
-            box-shadow: 0 4px 6px -1px rgba(212, 175, 55, 0.4);
-        }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white; padding: 0; }
-            .print-card { shadow: none; border: 1px solid #ccc; }
-        }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #F4F6F9; }
+        .bg-navy { background-color: #1D2A57; }
+        .text-navy { color: #1D2A57; }
+        .border-navy { border-color: #1D2A57; }
+        .bg-gold { background-color: #C59B27; }
+        .text-gold { color: #C59B27; }
+        .bg-red-tp { background-color: #D9232A; }
+        .text-red-tp { color: #D9232A; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-900 font-sans p-2 sm:p-6 min-h-screen">
+<body class="p-2 md:p-6 text-gray-800">
 
-    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-brand-gold print-card">
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
         
-        <!-- HEADER SYSTEM & LOGO (Dominan Gold + Black + Sentuhan Blue/Red) -->
-        <header class="bg-brand-gold text-gray-900 p-6 border-b-4 border-brand-blue flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-16 h-16 bg-black border-2 border-brand-blue text-brand-gold font-black text-2xl rounded-xl flex items-center justify-center shadow-lg">
-                    T&P
+        <!-- BANNER ATAS (HEADER) -->
+        <div class="bg-red-tp p-4 text-white flex items-center justify-between shadow-md">
+            <div class="flex items-center gap-3">
+                <div class="bg-white p-1 rounded-lg flex items-center justify-center border border-gray-200 shadow-sm">
+                    <span class="text-red-tp font-black text-xl px-2">T&P</span>
                 </div>
                 <div>
-                    <h1 class="text-2xl sm:text-3xl font-black tracking-wide text-brand-blue">Teman & Penjagaan</h1>
-                    <p class="text-sm font-bold text-gray-800">Invois Perkhidmatan Penjagaan Pesakit</p>
+                    <h1 class="text-xl md:text-2xl font-extrabold tracking-wide" id="txt-title">Teman & Penjagaan (T&P)</h1>
+                    <p class="text-amber-200 font-semibold text-xs md:text-sm" id="txt-subtitle">Special CARE & SUPPORT</p>
                 </div>
             </div>
-            <div class="text-right text-xs bg-black p-3 rounded-xl border-2 border-brand-blue w-full sm:w-auto text-white">
-                <p class="font-black text-sm text-brand-gold">NO. INVOIS: <span id="inv-no" class="text-white">T&P-2026-001</span></p>
-                <p class="font-semibold">Tarikh: <span id="inv-date" class="text-yellow-200">08/10/2026</span></p>
-            </div>
-        </header>
+            <!-- BUTANG TUKAR BAHASA -->
+            <button type="button" onclick="toggleLanguage()" class="bg-gold hover:bg-yellow-600 text-navy font-bold px-3 py-1.5 rounded-lg shadow text-sm flex items-center gap-2">
+                <i class="fa-solid fa-globe"></i>
+                <span id="btn-lang-text">English</span>
+            </button>
+        </div>
 
-        <form id="invoiceForm" class="p-6 space-y-8 bg-white">
+        <form class="p-4 md:p-8 space-y-8" onsubmit="event.preventDefault();">
 
-            <!-- BAHAGIAN 1: MAKLUMAT PIC / PETUGAS BERTUGAS -->
-            <section class="space-y-4">
-                <div class="flex items-center gap-2 border-b-2 border-brand-gold pb-2">
-                    <span class="bg-brand-gold text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-black border border-brand-blue">1</span>
-                    <h2 class="text-xl font-black text-brand-blue">Maklumat PIC / Petugas Bertugas</h2>
+            <!-- BAHAGIAN 1: MAKLUMAT PESAKIT & WARIS -->
+            <div class="bg-white p-5 md:p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                    <span class="bg-navy text-white font-bold w-8 h-8 rounded-full flex items-center justify-center text-base">1</span>
+                    <h2 class="text-xl font-bold text-navy" id="sec1-title">Maklumat Pesakit & Waris</h2>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-base font-bold text-black mb-1">Nama PIC / Petugas Bertugas</label>
-                        <input type="text" placeholder="Masukkan nama petugas..." required 
-                            class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-lg font-semibold text-black focus:border-brand-gold outline-none transition">
+                        <label class="block font-bold text-gray-700 mb-1" id="lbl-date">Tarikh Tempahan *</label>
+                        <input type="date" value="2026-11-06" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
                     </div>
                     <div>
-                        <label class="block text-base font-bold text-black mb-1">No. Telefon PIC</label>
-                        <input type="tel" placeholder="Contoh: 019-8765432" required 
-                            class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-lg font-semibold text-black focus:border-brand-gold outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-base font-bold text-black mb-1">Jenis Kenderaan</label>
-                        <input type="text" placeholder="Contoh: Toyota Hiace / Perodua Alza / Van Medical" required 
-                            class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-lg font-semibold text-black focus:border-brand-gold outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-base font-bold text-black mb-1">No. Pendaftaran Kenderaan</label>
-                        <input type="text" placeholder="Contoh: WXX 1234" required 
-                            class="w-full p-3.5 border-2 border-gray-300 rounded-xl text-lg font-semibold text-black focus:border-brand-gold outline-none transition">
-                    </div>
-                </div>
-            </section>
-
-            <!-- BAHAGIAN 2: MAKLUMAT BAYARAN & INVOIS -->
-            <section class="space-y-4 bg-yellow-50/60 p-5 rounded-2xl border-2 border-brand-gold">
-                <div class="flex items-center gap-2 border-b-2 border-brand-gold pb-2">
-                    <span class="bg-brand-gold text-brand-blue w-8 h-8 rounded-full flex items-center justify-center font-black border border-brand-blue">2</span>
-                    <h2 class="text-xl font-black text-brand-blue">Maklumat Bayaran & Invois</h2>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-bold text-gray-800 mb-1">Nama Pesakit (Auto)</label>
-                        <input type="text" id="bayarNamaPesakit" placeholder="Masukkan nama pesakit..." 
-                            class="w-full p-3 border-2 border-gray-300 rounded-xl font-bold bg-white text-gray-800 focus:border-brand-gold outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-800 mb-1">Tarikh Tempahan</label>
-                        <input type="date" required class="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-black focus:border-brand-gold outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-800 mb-1">Masa / Tempoh Tempahan (Auto/Manual)</label>
-                        <input type="text" id="bayarMasaTempahan" placeholder="Contoh: 4 Jam (Minima)" 
-                            class="w-full p-3 border-2 border-gray-300 rounded-xl font-bold bg-white text-gray-800 focus:border-brand-gold outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-bold text-gray-800 mb-1">(KM) Perjalanan (Auto/Manual)</label>
-                        <input type="number" placeholder="Masukkan anggaran KM (Contoh: 15)" 
-                            class="w-full p-3 border-2 border-gray-300 rounded-xl font-bold text-black focus:border-brand-gold outline-none">
+                        <label class="block font-bold text-gray-700 mb-1" id="lbl-kin-phone">Nombor Telefon Waris *</label>
+                        <input type="tel" placeholder="Contoh: 012-3456789" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
                     </div>
                 </div>
 
-                <!-- Pengiraan Jumlah Bayaran, Deposit & Baki -->
-                <div class="p-4 bg-white rounded-xl border-2 border-brand-gold space-y-3 mt-4 shadow-sm">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-sm font-black text-brand-blue mb-1">JUMLAH BAYARAN (RM)</label>
-                            <input type="number" id="jumlahBayaran" oninput="kiraDeposit()" placeholder="0.00" step="0.01" required 
-                                class="w-full p-3 border-2 border-brand-gold rounded-xl text-2xl font-black text-brand-blue outline-none bg-yellow-50 focus:border-brand-blue">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-black text-green-800 mb-1">BAYARAN PERTAMA 50% (DEPOSIT)</label>
-                            <input type="text" id="deposit50" readonly placeholder="RM 0.00" 
-                                class="w-full p-3 border-2 border-green-600 rounded-xl text-2xl font-black text-green-700 bg-green-50 cursor-not-allowed">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-black text-gray-700 mb-1">BAKI BAYARAN (SELEPAS SERVIS)</label>
-                            <input type="text" id="bakiBayaran" readonly placeholder="Diserahkan selepas selesai" 
-                                class="w-full p-3 border border-gray-300 rounded-xl text-sm font-bold bg-gray-100 text-gray-600 cursor-not-allowed">
-                        </div>
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-patient">Nama Pesakit *</label>
+                    <input type="text" placeholder="Contoh: Encik Ahmad Bin Ali" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-kin">Nama Waris / Pemohon *</label>
+                    <input type="text" placeholder="Contoh: Puan Siti Binti Ahmad" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-address">Alamat Rumah (Lokasi Penjemputan) *</label>
+                    <textarea id="addressInput" rows="3" placeholder="Masukkan alamat lengkap rumah di sini..." oninput="document.getElementById('linkedAddress').innerText = this.value || '(Alamat rumah akan dipaparkan di sini secara automatik...)'" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-condition">Jenis Penyakit / Keadaan Pesakit *</label>
+                    <textarea rows="3" placeholder="Contoh: Kencing manis, uzur usia, memerlukan kerusi roda..." class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none"></textarea>
+                </div>
+            </div>
+
+            <!-- BAHAGIAN 2: PILIHAN PERKHIDMATAN & PENGIRAAN KOS -->
+            <div class="bg-white p-5 md:p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                    <span class="bg-navy text-white font-bold w-8 h-8 rounded-full flex items-center justify-center text-base">2</span>
+                    <div>
+                        <h2 class="text-xl font-bold text-navy" id="sec2-title">Pilihan Perkhidmatan & Pengiraan Kos</h2>
+                        <p class="text-xs text-gray-500" id="sec2-sub">Pilih perkhidmatan Kategori A, Kategori B, atau Kedua-duanya.</p>
                     </div>
                 </div>
-            </section>
 
-            <!-- BAHAGIAN 3: INFO, TERMA TEMPAHAN & MAKLUMAT TAMBAHAN -->
-            <section class="space-y-6 pt-4 border-t-2 border-gray-200">
-                <!-- Info & Terma Tempahan -->
-                <div class="bg-yellow-50 p-5 rounded-2xl border-2 border-brand-gold">
-                    <h3 class="text-lg font-black text-brand-gold-dark mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-thumbtack text-brand-red"></i> INFO & TERMA TEMPAHAN
-                    </h3>
-                    <ol class="list-decimal list-inside space-y-2 text-sm text-black font-semibold leading-relaxed">
-                        <li>Tempahan disarankan dibuat <strong>3–5 hari lebih awal</strong> bagi mengelakkan pertindihan jadual dan memastikan slot tersedia.</li>
-                        <li>🏥 <strong>Hospital / Rumah / Pesakit Warded:</strong> Tempahan minimum <strong>4 jam</strong>.</li>
-                        <li>🏥 <strong>Klinik / Pengambilan Ubat:</strong> Tempahan mengikut jam.</li>
-                        <li>Sebarang perubahan tarikh atau masa perlu dimaklumkan lebih awal.</li>
-                        <li>Tempahan tertakluk kepada kekosongan slot dan pengesahan pihak kami.</li>
-                        <li><strong>Bayaran deposit sebanyak 50%</strong> daripada caj minimum 4 jam perlu dijelaskan sebelum servis bermula. Baki bayaran perlu dijelaskan selepas servis selesai.</li>
-                    </ol>
+                <!-- KATEGORI A -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="bg-navy text-white font-bold px-3 py-1 rounded text-sm" id="catA-tag">Kategori A / Category A</span>
+                        <span class="text-red-tp font-bold text-xs flex items-center gap-1" id="catA-min"><i class="fa-solid fa-clock"></i> Minimum 4 Jam</span>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 text-sm mb-1" id="lbl-servA">Pilih Perkhidmatan A</label>
+                        <select id="servA" onchange="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                            <option value="0">-- Tiada / None --</option>
+                            <option value="25">Peneman ke Hospital (Boleh Jalan) - RM25/jam</option>
+                            <option value="33">Peneman ke Hospital (Berkerusi Roda) - RM33/jam</option>
+                            <option value="21">Peneman di Ward - RM21/jam</option>
+                            <option value="27">Peneman di Rumah (Boleh Jalan) - RM27/jam</option>
+                            <option value="33">Peneman di Rumah (Terlantar) - RM33/jam</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 text-sm mb-1" id="lbl-hrsA">Bilangan Jam (Minima 4 Jam)</label>
+                        <select id="hrsA" onchange="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                            <option value="4">4 Jam / Hours</option>
+                            <option value="5">5 Jam / Hours</option>
+                            <option value="6">6 Jam / Hours</option>
+                            <option value="8">8 Jam / Hours</option>
+                            <option value="12">12 Jam / Hours</option>
+                        </select>
+                    </div>
                 </div>
 
-                <!-- Maklumat Tambahan -->
-                <div class="bg-gray-100 p-5 rounded-2xl border-2 border-brand-blue">
-                    <h3 class="text-lg font-black text-brand-blue mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-circle-info text-brand-gold-dark"></i> MAKLUMAT TAMBAHAN
-                    </h3>
-                    <ul class="list-disc list-inside space-y-2 text-sm text-black font-semibold leading-relaxed">
-                        <li>PIC akan menghubungi waris untuk pengesahan sebelum servis bermula.</li>
-                        <li>Waris diminta memastikan pesakit bersedia pada waktu yang ditetapkan.</li>
-                        <li>Sebarang perubahan jadual akan dimaklumkan lebih awal.</li>
-                    </ul>
-                    <p class="text-center font-black text-brand-gold-dark text-base mt-4">
-                        Terima kasih kerana memilih servis kami. <span class="text-brand-red">❤️</span>
+                <!-- KATEGORI B -->
+                <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <span class="bg-gold text-navy font-bold px-3 py-1 rounded text-sm" id="catB-tag">Kategori B / Category B</span>
+                        <span class="text-red-tp font-bold text-xs flex items-center gap-1" id="catB-min"><i class="fa-solid fa-clock"></i> Minimum 1 Jam</span>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 text-sm mb-1" id="lbl-servB">Pilih Perkhidmatan B</label>
+                        <select id="servB" onchange="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                            <option value="0">-- Tiada / None --</option>
+                            <option value="25">Ambil Ubat - RM25/jam</option>
+                            <option value="25">Peneman ke Klinik (Boleh Jalan) - RM25/jam</option>
+                            <option value="33">Peneman ke Klinik (Berkerusi Roda) - RM33/jam</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-gray-700 text-sm mb-1" id="lbl-hrsB">Bilangan Jam (Minima 1 Jam)</label>
+                        <select id="hrsB" onchange="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                            <option value="1">1 Jam / Hour</option>
+                            <option value="2">2 Jam / Hours</option>
+                            <option value="3">3 Jam / Hours</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAHAGIAN 3: DESTINASI & LALUAN PERJALANAN -->
+            <div class="bg-white p-5 md:p-6 rounded-xl border border-gray-200 shadow-sm space-y-4">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                    <span class="bg-navy text-white font-bold w-8 h-8 rounded-full flex items-center justify-center text-base">3</span>
+                    <h2 class="text-xl font-bold text-navy" id="sec3-title">Destinasi & Laluan Perjalanan</h2>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-dest">Nama Destinasi *</label>
+                    <input type="text" placeholder="Contoh: Hospital Sultanah Aminah / Klinik Kesihatan Skudai" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-trip">Jenis Perjalanan *</label>
+                    <!-- ONCHANGE DITAMBAH DI SINI -->
+                    <select id="tripType" onchange="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                        <option value="1">(1 Hala) Rumah ke Hospital/Klinik</option>
+                        <option value="2">(2 Hala) Rumah ke Hospital & Balik ke Rumah</option>
+                    </select>
+                </div>
+
+                <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                    <label class="block font-bold text-navy text-sm mb-1">
+                        <i class="fa-solid fa-location-dot text-red-tp mr-1"></i> <span id="lbl-link-addr">Pautan Alamat Jemputan:</span>
+                    </label>
+                    <p id="linkedAddress" class="text-gray-500 italic text-sm">(Alamat rumah akan dipaparkan di sini secara automatik...)</p>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-dist">Anggaran Jarak / Kos Pengangkutan (RM1.50/KM)</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="distKm" placeholder="Masukkan Jarak (KM)" oninput="calc()" class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none">
+                        <span class="font-bold text-gray-600">KM</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KOTAK BIRU: RINGKASAN ANGGARAN KOS -->
+            <div class="bg-navy text-white p-6 rounded-xl border-2 border-gold shadow-lg space-y-4">
+                <div class="flex items-center gap-2 text-gold font-bold text-lg border-b border-gray-600 pb-2">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span id="sum-title">Ringkasan Anggaran Kos</span>
+                </div>
+                <div class="space-y-2 text-base md:text-lg">
+                    <div class="flex justify-between">
+                        <span id="sum-catA">Jumlah Kategori A:</span>
+                        <span class="font-bold" id="outA">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span id="sum-catB">Jumlah Kategori B:</span>
+                        <span class="font-bold" id="outB">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-600 pb-2">
+                        <span id="sum-trans">Jumlah Pengangkutan:</span>
+                        <span class="font-bold text-gold" id="outTrans">RM 0.00</span>
+                    </div>
+                    <div class="flex justify-between text-xl font-black pt-1">
+                        <span id="sum-total">JUMLAH KESELURUHAN:</span>
+                        <span class="text-gold" id="outTotal">RM 0.00</span>
+                    </div>
+                </div>
+
+                <div class="bg-blue-950 p-3 rounded-lg border border-gold/40 flex justify-between items-center">
+                    <div>
+                        <p class="text-gold font-bold text-sm" id="sum-dep-title">DEPOSIT 50% DIPERLUKAN:</p>
+                        <p class="text-xs text-gray-300" id="sum-dep-sub">Dijelaskan sebelum perkhidmatan bermula</p>
+                    </div>
+                    <span class="text-2xl font-black text-red-400" id="outDep">RM 0.00</span>
+                </div>
+            </div>
+
+            <!-- BAHAGIAN 4: CATATAN & TERMA PERKHIDMATAN -->
+            <div class="bg-white p-5 md:p-6 rounded-xl border border-gray-200 shadow-sm space-y-5">
+                <div class="flex items-center gap-3 border-b border-gray-200 pb-3">
+                    <span class="bg-navy text-white font-bold w-8 h-8 rounded-full flex items-center justify-center text-base">4</span>
+                    <h2 class="text-xl font-bold text-navy" id="sec4-title">Catatan & Terma Perkhidmatan</h2>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-gray-700 mb-1" id="lbl-notes">Catatan / Keperluan Tambahan</label>
+                    <textarea rows="3" placeholder="Masukkan arahan khas, pesanan atau maklumat penting di sini..." class="w-full p-3 border-2 border-gray-300 rounded-lg focus:border-navy focus:outline-none"></textarea>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-tp p-4 rounded-r-lg space-y-3 text-sm text-gray-800">
+                    <p class="font-bold text-red-tp flex items-center gap-2 text-base" id="tc-header">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        INFO & TERMA TEMPAHAN PENTING
                     </p>
+                    <div class="bg-white p-3 rounded border border-red-200 font-bold text-red-800" id="tc-important">
+                        ⚠️ Penting: BUKAN rawatan perubatan berat seperti tukar catheter/tiub. Perkhidmatan kami lebih kepada teman, urus pergerakan dan kemudahan asas.
+                    </div>
+                    <ul class="list-disc pl-5 space-y-1 text-gray-700" id="tc-list">
+                        <li>Tempahan disarangkan dibuat 3–5 hari lebih awal bagi mengelakkan pertindihan jadual.</li>
+                        <li>Hospital / Rumah / Wad: Tempahan minimum 4 jam.</li>
+                        <li>Klinik / Pengambilan Ubat: Tempahan mengikut jam (minima 1 jam).</li>
+                        <li>Bayaran deposit 50% daripada caj perkhidmatan perlu dijelaskan sebelum servis bermula. Baki dijelaskan selesai servis.</li>
+                        <li>Caj dikira mengikut tempoh tempahan walaupun servis selesai lebih awal.</li>
+                        <li>Sebarang pertukaran tarikh atau masa perlu dimaklumkan lebih awal.</li>
+                        <li>Tempahan tertakluk kepada kekosongan slot dan pengesahan pihak T&P.</li>
+                    </ul>
                 </div>
-            </section>
-
-            <!-- BUTANG AKSI (NO PRINT) -->
-            <div class="pt-2 no-print">
-                <button type="button" onclick="window.print()" class="w-full bg-brand-gold text-brand-blue py-4 rounded-xl font-black text-xl border-2 border-brand-blue shadow-xl hover:bg-black hover:text-brand-gold transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-print"></i> CETAK INVOIS / SIMPAN PDF
-                </button>
             </div>
+
+            <button type="submit" id="btn-submit" class="w-full bg-red-tp hover:bg-red-700 text-white font-black text-xl py-4 rounded-xl shadow-lg transition">
+                HANTAR TEMPAHAN
+            </button>
 
         </form>
-
     </div>
 
-    <!-- LOGIK JAVASCRIPT SYSTEM -->
     <script>
-        // Set Default Tarikh Semasa
-        document.getElementById('inv-date').innerText = new Date().toLocaleDateString('en-GB');
+        let currentLang = 'BM';
 
-        // Auto Calculate Deposit 50%
-        function kiraDeposit() {
-            const total = parseFloat(document.getElementById('jumlahBayaran').value);
-            const depositEl = document.getElementById('deposit50');
-            const bakiEl = document.getElementById('bakiBayaran');
+        function toggleLanguage() {
+            currentLang = currentLang === 'BM' ? 'EN' : 'BM';
+            document.getElementById('btn-lang-text').innerText = currentLang === 'BM' ? 'English' : 'Bahasa Melayu';
+            
+            if (currentLang === 'EN') {
+                document.getElementById('sec1-title').innerText = 'Patient & Next of Kin Information';
+                document.getElementById('lbl-date').innerText = 'Booking Date *';
+                document.getElementById('lbl-kin-phone').innerText = 'Next of Kin Phone Number *';
+                document.getElementById('lbl-patient').innerText = "Patient's Name *";
+                document.getElementById('lbl-kin').innerText = 'Next of Kin / Applicant Name *';
+                document.getElementById('lbl-address').innerText = 'Home Address (Pickup Location) *';
+                document.getElementById('lbl-condition').innerText = 'Medical Condition / Patient Status *';
 
-            if (!isNaN(total) && total > 0) {
-                const deposit = total * 0.50;
-                depositEl.value = 'RM ' + deposit.toFixed(2);
-                bakiEl.value = 'RM ' + (total - deposit).toFixed(2) + ' (Selepas Servis)';
+                document.getElementById('sec2-title').innerText = 'Service Selection & Cost Calculation';
+                document.getElementById('sec2-sub').innerText = 'Select Category A, Category B, or Both.';
+                document.getElementById('lbl-servA').innerText = 'Select Service A';
+                document.getElementById('lbl-hrsA').innerText = 'Number of Hours (Min 4 Hours)';
+                document.getElementById('lbl-servB').innerText = 'Select Service B';
+                document.getElementById('lbl-hrsB').innerText = 'Number of Hours (Min 1 Hour)';
+
+                document.getElementById('sec3-title').innerText = 'Destination & Travel Route';
+                document.getElementById('lbl-dest').innerText = 'Destination Name *';
+                document.getElementById('lbl-trip').innerText = 'Trip Type *';
+                document.getElementById('lbl-link-addr').innerText = 'Linked Pickup Address:';
+                document.getElementById('lbl-dist').innerText = 'Estimated Distance / Transport Fee (RM1.50/KM)';
+
+                document.getElementById('sum-title').innerText = 'Estimated Cost Summary';
+                document.getElementById('sum-catA').innerText = 'Total Category A:';
+                document.getElementById('sum-catB').innerText = 'Total Category B:';
+                document.getElementById('sum-trans').innerText = 'Total Transportation:';
+                document.getElementById('sum-total').innerText = 'GRAND TOTAL:';
+                document.getElementById('sum-dep-title').innerText = '50% DEPOSIT REQUIRED:';
+                document.getElementById('sum-dep-sub').innerText = 'To be cleared before service begins';
+
+                document.getElementById('sec4-title').innerText = 'Notes & Terms of Service';
+                document.getElementById('lbl-notes').innerText = 'Additional Notes / Special Requirements';
+                document.getElementById('btn-submit').innerText = 'SUBMIT BOOKING';
             } else {
-                depositEl.value = 'RM 0.00';
-                bakiEl.value = 'Diserahkan selepas selesai';
+                document.getElementById('sec1-title').innerText = 'Maklumat Pesakit & Waris';
+                document.getElementById('lbl-date').innerText = 'Tarikh Tempahan *';
+                document.getElementById('lbl-kin-phone').innerText = 'Nombor Telefon Waris *';
+                document.getElementById('lbl-patient').innerText = 'Nama Pesakit *';
+                document.getElementById('lbl-kin').innerText = 'Nama Waris / Pemohon *';
+                document.getElementById('lbl-address').innerText = 'Alamat Rumah (Lokasi Penjemputan) *';
+                document.getElementById('lbl-condition').innerText = 'Jenis Penyakit / Keadaan Pesakit *';
+
+                document.getElementById('sec2-title').innerText = 'Pilihan Perkhidmatan & Pengiraan Kos';
+                document.getElementById('sec2-sub').innerText = 'Pilih perkhidmatan Kategori A, Kategori B, atau Kedua-duanya.';
+                document.getElementById('lbl-servA').innerText = 'Pilih Perkhidmatan A';
+                document.getElementById('lbl-hrsA').innerText = 'Bilangan Jam (Minima 4 Jam)';
+                document.getElementById('lbl-servB').innerText = 'Pilih Perkhidmatan B';
+                document.getElementById('lbl-hrsB').innerText = 'Bilangan Jam (Minima 1 Jam)';
+
+                document.getElementById('sec3-title').innerText = 'Destinasi & Laluan Perjalanan';
+                document.getElementById('lbl-dest').innerText = 'Nama Destinasi *';
+                document.getElementById('lbl-trip').innerText = 'Jenis Perjalanan *';
+                document.getElementById('lbl-link-addr').innerText = 'Pautan Alamat Jemputan:';
+                document.getElementById('lbl-dist').innerText = 'Anggaran Jarak / Kos Pengangkutan (RM1.50/KM)';
+
+                document.getElementById('sum-title').innerText = 'Ringkasan Anggaran Kos';
+                document.getElementById('sum-catA').innerText = 'Jumlah Kategori A:';
+                document.getElementById('sum-catB').innerText = 'Jumlah Kategori B:';
+                document.getElementById('sum-trans').innerText = 'Jumlah Pengangkutan:';
+                document.getElementById('sum-total').innerText = 'JUMLAH KESELURUHAN:';
+                document.getElementById('sum-dep-title').innerText = 'DEPOSIT 50% DIPERLUKAN:';
+                document.getElementById('sum-dep-sub').innerText = 'Dijelaskan sebelum perkhidmatan bermula';
+
+                document.getElementById('sec4-title').innerText = 'Catatan & Terma Perkhidmatan';
+                document.getElementById('lbl-notes').innerText = 'Catatan / Keperluan Tambahan';
+                document.getElementById('btn-submit').innerText = 'HANTAR TEMPAHAN';
             }
+        }
+
+        // FUNGSI PENGIRAAN DENGAN MULTIPLIER 1 HALA / 2 HALA
+        function calc() {
+            let rA = parseFloat(document.getElementById('servA').value) || 0;
+            let hA = parseFloat(document.getElementById('hrsA').value) || 0;
+            let totA = rA * hA;
+
+            let rB = parseFloat(document.getElementById('servB').value) || 0;
+            let hB = parseFloat(document.getElementById('hrsB').value) || 0;
+            let totB = rB * hB;
+
+            let km = parseFloat(document.getElementById('distKm').value) || 0;
+            let tripMultiplier = parseFloat(document.getElementById('tripType').value) || 1; // 1 atau 2
+            let totTrans = km * 1.50 * tripMultiplier;
+
+            let grand = totA + totB + totTrans;
+            let dep = grand * 0.5;
+
+            document.getElementById('outA').innerText = 'RM ' + totA.toFixed(2);
+            document.getElementById('outB').innerText = 'RM ' + totB.toFixed(2);
+            document.getElementById('outTrans').innerText = 'RM ' + totTrans.toFixed(2);
+            document.getElementById('outTotal').innerText = 'RM ' + grand.toFixed(2);
+            document.getElementById('outDep').innerText = 'RM ' + dep.toFixed(2);
         }
     </script>
 </body>
