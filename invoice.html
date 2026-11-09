@@ -57,14 +57,17 @@
     <!-- HELAIAN INVOIS UTAMA -->
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 print-container">
         
-        <!-- HEADER MERAH MENGIKUT GAMBAR KE-2 -->
-        <div class="bg-red-tp px-6 py-4 text-white flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3 bg-white p-2 rounded-lg shadow-sm">
-                <img src="header2.png" alt="Logo T&P" class="h-10 object-contain" onerror="this.src='https://via.placeholder.com/120x40?text=T%26P+LOGO'">
+        <!-- HEADER MENGIKUT GAMBAR KE-2 (LOGO KIRI + BANNER MERAH KANAN) -->
+        <div class="bg-white border-b border-gray-200 p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center">
+                <img src="header2.png" alt="Logo T&P" class="h-16 md:h-20 object-contain" onerror="this.src='https://via.placeholder.com/200x80?text=T%26P+LOGO'">
             </div>
-            <div class="text-center md:text-right space-y-0.5">
-                <h2 class="text-xl md:text-2xl font-black tracking-wide uppercase">Special CARE & SUPPORT</h2>
-                <p class="text-[10px] text-red-100 italic">Syarikat berhak mengubah maklumat pada bila-bila masa. Sebarang kemas kini akan dimaklumkan sewajarnya.<br>The company reserve the right to amend any information at any time. Updates will be notified accordingly.</p>
+            <div class="text-center md:text-right space-y-1 bg-red-tp text-white p-3 rounded-lg shadow-sm w-full md:w-auto">
+                <h2 class="text-lg md:text-xl font-black tracking-wide uppercase">Special CARE & SUPPORT</h2>
+                <p class="text-[10px] text-red-100 italic leading-tight">
+                    Syarikat berhak mengubah maklumat pada bila-bila masa. Sebarang kemas kini akan dimaklumkan sewajarnya.<br>
+                    The company reserve the right to amend any information at any time. Updates will be notified accordingly.
+                </p>
             </div>
         </div>
 
@@ -72,19 +75,19 @@
         <div class="bg-white border-b border-gray-200 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div class="space-y-1"></div>
             <div class="text-left md:text-right space-y-1 w-full md:w-auto">
-                <span class="bg-red-100 text-red-700 text-[11px] font-black px-3 py-0.5 rounded-full uppercase">INVOIS RASMI / OFFICIAL INVOICE</span>
+                <span class="bg-red-100 text-red-700 text-[11px] font-black px-3 py-0.5 rounded-full uppercase" id="lblInvTitle">INVOIS RASMI / OFFICIAL INVOICE</span>
                 <h3 class="text-xl md:text-2xl font-black text-navy mt-1" id="invNum">INV-2026-0001</h3>
                 <p class="text-xs text-gray-500"><span id="lblInvDate">Tarikh Dikeluarkan:</span> <input type="date" id="invDate" class="border-b focus:outline-none text-xs font-bold bg-transparent"></p>
-                <p class="text-xs text-gray-500"><span id="lblStatus">Status:</span> <span class="text-yellow-600 font-bold">Menunggu Deposit (50%)</span></p>
+                <p class="text-xs text-gray-500"><span id="lblStatus">Status:</span> <span class="text-yellow-600 font-bold" id="statusText">Menunggu Deposit (50%)</span></p>
                 <p class="text-xs font-bold text-navy"><span id="lblRef">Rujukan (No. Booking Tempahan):</span> <span id="invRefNum" class="text-blue-700 font-mono">TP-20261107-4835</span></p>
                 
-                <!-- PIC BUKAK INVOICE (DIKEMASKINI: ATIQAH, ARINA, INSYIRAH) -->
+                <!-- PIC BUKAK INVOICE -->
                 <div class="pt-1 text-xs flex md:justify-end items-center gap-1">
                     <span class="font-bold text-gray-600" id="lblPicOpen">PIC Bukak Invoice:</span>
                     <select id="picOpenSelect" onchange="checkCustomInput(this, 'picOpenCustom')" class="border border-gray-300 rounded px-1.5 py-0.5 text-xs focus:outline-none bg-white">
-                        <option value="Atiqah">Atiqah</option>
-                        <option value="Arina">Arina</option>
-                        <option value="Insyirah">Insyirah</option>
+                        <option value="Hidayat">Hidayat</option>
+                        <option value="Ahzah">Ahzah</option>
+                        <option value="Afiq">Afiq</option>
                         <option value="+ PIC Baharu">+ PIC Baharu</option>
                     </select>
                     <input type="text" id="picOpenCustom" placeholder="Taip nama..." class="hidden border border-gray-300 rounded px-1.5 py-0.5 text-xs w-24">
@@ -185,7 +188,7 @@
                                     <p class="text-[10px] text-gray-500 mt-0.5"><span id="lblDest">Destinasi:</span> <input type="text" id="invDest" value="Pakis 16" class="w-2/3 border-b border-gray-200 focus:outline-none"></p>
                                 </td>
                                 <td class="p-2.5 text-center">
-                                    <span class="bg-gray-100 text-gray-800 text-[10px] px-2 py-0.5 rounded font-bold">Pengangkutan / Transport</span>
+                                    <span class="bg-gray-100 text-gray-800 text-[10px] px-2 py-0.5 rounded font-bold" id="tagCatTrans">Pengangkutan / Transport</span>
                                 </td>
                                 <td class="p-2.5 text-center">
                                     <input type="text" id="invKm" value="12 KM (1 Hala)" class="w-24 text-center border-b border-gray-200 focus:outline-none">
@@ -199,7 +202,7 @@
                 </div>
             </div>
 
-            <!-- MAKLUMAT PETUGAS & LOGISTIK (ATIQAH, ARINA, INSYIRAH) -->
+            <!-- MAKLUMAT PETUGAS & LOGISTIK (HIDAYAT, AHZAH, AFIQ) -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2 text-xs">
                 <h5 class="font-bold text-navy uppercase tracking-wider flex items-center gap-1" id="lblPicSection">
                     <i class="fa-solid fa-user-shield text-gold"></i> MAKLUMAT PETUGAS & LOGISTIK / PIC & VEHICLE DETAILS
@@ -208,9 +211,9 @@
                     <div>
                         <label class="block font-bold text-gray-700 mb-1" id="lblPicName">Nama PIC Servis:</label>
                         <select id="picNameSelect" onchange="checkCustomInput(this, 'picNameCustom')" class="w-full p-1.5 border rounded border-gray-300 focus:outline-none bg-white">
-                            <option value="Atiqah">Atiqah</option>
-                            <option value="Arina">Arina</option>
-                            <option value="Insyirah">Insyirah</option>
+                            <option value="Hidayat">Hidayat</option>
+                            <option value="Ahzah">Ahzah</option>
+                            <option value="Afiq">Afiq</option>
                             <option value="+ PIC Baharu">+ PIC Baharu</option>
                         </select>
                         <input type="text" id="picNameCustom" placeholder="Taip nama..." class="hidden w-full p-1.5 border rounded border-gray-300 mt-1">
@@ -259,8 +262,8 @@
                         </div>
                         <div class="text-gray-800 space-y-1">
                             <p class="font-bold text-navy">Hong Leong Bank</p>
-                            <p><strong>Nama Akaun:</strong><br><span class="text-blue-900 font-bold">GrowSmart Special Care Centre</span></p>
-                            <p><strong>No. Akaun:</strong><br><span class="font-mono text-sm font-bold text-navy">39501242014</span></p>
+                            <p><strong id="lblAccName">Nama Akaun:</strong><br><span class="text-blue-900 font-bold">GrowSmart Special Care Centre</span></p>
+                            <p><strong id="lblAccNum">No. Akaun:</strong><br><span class="font-mono text-sm font-bold text-navy">39501242014</span></p>
                         </div>
                     </div>
                     <p class="text-[11px] text-red-600 font-semibold italic border-t border-blue-200 pt-2" id="lblPayNote">
@@ -304,7 +307,7 @@
         </div>
 
         <!-- FOOTER RASMI -->
-        <div class="bg-gray-100 p-4 text-center text-xs text-gray-600 border-t border-gray-200">
+        <div class="bg-gray-100 p-4 text-center text-xs text-gray-600 border-t border-gray-200" id="footerText">
             Terima kasih kerana memilih <strong>GrowSmart Special Care Centre</strong>. Keselesaan & keselamatan anda keutamaan kami.
         </div>
 
@@ -343,6 +346,100 @@
         function toggleLang() {
             currentLang = currentLang === 'BM' ? 'EN' : 'BM';
             document.getElementById('btnLangText').innerText = currentLang === 'BM' ? 'English' : 'Bahasa Melayu';
+
+            if (currentLang === 'EN') {
+                document.getElementById('lblPrintBtn').innerText = 'Print / PDF';
+                document.getElementById('lblInvTitle').innerText = 'OFFICIAL INVOICE';
+                document.getElementById('lblInvDate').innerText = 'Date Issued:';
+                document.getElementById('lblStatus').innerText = 'Status:';
+                document.getElementById('statusText').innerText = 'Awaiting Deposit (50%)';
+                document.getElementById('lblRef').innerText = 'Reference (Booking No):';
+                document.getElementById('lblPicOpen').innerText = 'Invoice Created By (PIC):';
+                document.getElementById('lblIssuedBy').innerText = 'ISSUED BY:';
+                document.getElementById('lblBilledTo').innerText = 'BILLED TO:';
+                document.getElementById('lblKinName').innerText = 'Next of Kin / Applicant Name:';
+                document.getElementById('lblPatientName').innerText = "Patient's Name:";
+                document.getElementById('lblKinPhone').innerText = 'Phone Number:';
+                document.getElementById('lblAddress').innerText = 'Pickup Address:';
+                document.getElementById('lblTableTitle').innerText = 'SERVICE DETAILS & DESTINATION';
+                document.getElementById('thService').innerText = 'SERVICE DETAILS';
+                document.getElementById('thCategory').innerText = 'CATEGORY';
+                document.getElementById('thDuration').innerText = 'DURATION / DISTANCE';
+                document.getElementById('thTotal').innerText = 'TOTAL (RM)';
+                document.getElementById('lblServDate').innerText = 'Service Date:';
+                document.getElementById('lblSubB').innerText = 'Basic care & facility assistance';
+                document.getElementById('lblTransTitle').innerText = 'Transportation Fee';
+                document.getElementById('lblDest').innerText = 'Destination:';
+                document.getElementById('tagCatTrans').innerText = 'Transport';
+                document.getElementById('lblPicSection').innerText = 'PIC & VEHICLE DETAILS';
+                document.getElementById('lblPicName').innerText = 'Service PIC Name:';
+                document.getElementById('lblVehicleType').innerText = 'Vehicle Type:';
+                document.getElementById('lblPlateNum').innerText = 'Plate Number:';
+                document.getElementById('lblPicPhone').innerText = 'PIC Phone Number:';
+                document.getElementById('lblPayTitle').innerText = 'DEPOSIT PAYMENT DETAILS';
+                document.getElementById('lblAccName').innerText = 'Account Name:';
+                document.getElementById('lblAccNum').innerText = 'Account Number:';
+                document.getElementById('lblPayNote').innerText = '• Please attach proof of receipt via WhatsApp 017-4202557.';
+                document.getElementById('lblGrand').innerText = 'GRAND TOTAL:';
+                document.getElementById('lblBal').innerText = 'BALANCE AFTER SERVICE:';
+                document.getElementById('lblDep').innerText = '50% DEPOSIT REQUIRED:';
+                document.getElementById('lblNotesHeader').innerText = 'ADDITIONAL INFORMATION & TERMS';
+                
+                document.getElementById('notesList').innerHTML = `
+                    <li>PIC will contact applicant/next of kin for confirmation before service starts.</li>
+                    <li>Next of kin is requested to ensure the patient is ready at the scheduled time.</li>
+                    <li>Any schedule changes will be notified in advance.</li>
+                    <li>Payment transactions can be made once all details are confirmed.</li>
+                    <li>Thank you for choosing our services.</li>
+                `;
+                document.getElementById('footerText').innerHTML = `Thank you for choosing <strong>GrowSmart Special Care Centre</strong>. Your comfort & safety are our priority.`;
+            } else {
+                document.getElementById('lblPrintBtn').innerText = 'Cetak / PDF';
+                document.getElementById('lblInvTitle').innerText = 'INVOIS RASMI / OFFICIAL INVOICE';
+                document.getElementById('lblInvDate').innerText = 'Tarikh Dikeluarkan:';
+                document.getElementById('lblStatus').innerText = 'Status:';
+                document.getElementById('statusText').innerText = 'Menunggu Deposit (50%)';
+                document.getElementById('lblRef').innerText = 'Rujukan (No. Booking Tempahan):';
+                document.getElementById('lblPicOpen').innerText = 'PIC Bukak Invoice:';
+                document.getElementById('lblIssuedBy').innerText = 'DARIPADA / ISSUED BY:';
+                document.getElementById('lblBilledTo').innerText = 'KEPADA / BILLED TO:';
+                document.getElementById('lblKinName').innerText = 'Nama Waris / Pemohon:';
+                document.getElementById('lblPatientName').innerText = 'Nama Pesakit:';
+                document.getElementById('lblKinPhone').innerText = 'No. Telefon Waris:';
+                document.getElementById('lblAddress').innerText = 'Alamat Penjemputan:';
+                document.getElementById('lblTableTitle').innerText = 'PERINCIAN PERKHIDMATAN & DESTINASI';
+                document.getElementById('thService').innerText = 'BUTIRAN SERVIS / PERKHIDMATAN';
+                document.getElementById('thCategory').innerText = 'KATEGORI';
+                document.getElementById('thDuration').innerText = 'TEMPOH / JARAK';
+                document.getElementById('thTotal').innerText = 'JUMLAH (RM)';
+                document.getElementById('lblServDate').innerText = 'Tarikh Servis:';
+                document.getElementById('lblSubB').innerText = 'Penjagaan asas & urusan fasiliti';
+                document.getElementById('lblTransTitle').innerText = 'Tambang Pengangkutan';
+                document.getElementById('lblDest').innerText = 'Destinasi:';
+                document.getElementById('tagCatTrans').innerText = 'Pengangkutan / Transport';
+                document.getElementById('lblPicSection').innerText = 'MAKLUMAT PETUGAS & LOGISTIK';
+                document.getElementById('lblPicName').innerText = 'Nama PIC Servis:';
+                document.getElementById('lblVehicleType').innerText = 'Jenis Kenderaan:';
+                document.getElementById('lblPlateNum').innerText = 'No. Pendaftaran:';
+                document.getElementById('lblPicPhone').innerText = 'No. Telefon PIC:';
+                document.getElementById('lblPayTitle').innerText = 'MAKLUMAT PEMBAYARAN DEPOSIT';
+                document.getElementById('lblAccName').innerText = 'Nama Akaun:';
+                document.getElementById('lblAccNum').innerText = 'No. Akaun:';
+                document.getElementById('lblPayNote').innerText = '• Sila sertakan bukti resit pembayaran ke WhatsApp 017-4202557.';
+                document.getElementById('lblGrand').innerText = 'JUMLAH KESELURUHAN:';
+                document.getElementById('lblBal').innerText = 'BAKI SELEPAS SERVIS:';
+                document.getElementById('lblDep').innerText = 'DEPOSIT 50% DIPERLUKAN:';
+                document.getElementById('lblNotesHeader').innerText = 'MAKLUMAT TAMBAHAN & TERMA TEMPAHAN';
+                
+                document.getElementById('notesList').innerHTML = `
+                    <li>PIC akan menghubungi penama/waris untuk pengesahan sebelum servis bermula.</li>
+                    <li>Waris diminta memastikan pesakit bersedia pada waktu yang ditetapkan.</li>
+                    <li>Sebarang perubahan jadual akan dimaklumkan lebih awal.</li>
+                    <li>Boleh lakukan transaksi pembayaran sekiranya semua sudah disahkan.</li>
+                    <li>Terima kasih kerana memilih servis kami.</li>
+                `;
+                document.getElementById('footerText').innerHTML = `Terima kasih kerana memilih <strong>GrowSmart Special Care Centre</strong>. Keselesaan & keselamatan anda keutamaan kami.`;
+            }
         }
 
         function searchInvoice() {
