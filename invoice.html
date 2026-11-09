@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Invois Teman & Penjagaan (T&P)</title>
+    <title>Invois Rasmi - Teman & Penjagaan (T&P)</title>
     <!-- Tailwind CSS & FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -11,12 +11,10 @@
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #EBF1F5; }
         .bg-navy { background-color: #1D2A57; }
         .text-navy { color: #1D2A57; }
-        .border-navy { border-color: #1D2A57; }
         .bg-gold { background-color: #C59B27; }
         .text-gold { color: #C59B27; }
         .bg-red-tp { background-color: #D9232A; }
-        .text-red-tp { color: #D9232A; }
-
+        
         @media print {
             .no-print { display: none !important; }
             body { background-color: #ffffff; padding: 0; }
@@ -27,54 +25,63 @@
 <body class="p-4 md:p-8">
 
     <!-- BAR ALATAN & CARIAN (NO PRINT) -->
-    <div class="max-w-4xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border border-gray-200 space-y-4 no-print">
+    <div class="max-w-4xl mx-auto mb-6 bg-white p-4 rounded-xl shadow-md border border-gray-200 space-y-3 no-print">
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
-                <h1 class="text-lg font-bold text-navy flex items-center gap-2">
-                    <i class="fa-solid fa-file-invoice-dollar text-gold"></i>
-                    Sistem Invois T&P / T&P Invoice System
+                <h1 class="text-base font-bold text-navy flex items-center gap-2">
+                    <i class="fa-solid fa-file-invoice-dollar text-gold"></i> Sistem Invois T&P / T&P Invoice System
                 </h1>
-                <p class="text-xs text-gray-500">Cari tempahan, kemas kini butiran, dan cetak invois rasmi.</p>
+                <p class="text-xs text-gray-500">Cari ID tempahan untuk tarik data secara automatik ke invois.</p>
             </div>
             <div class="flex items-center gap-2">
-                <button onclick="toggleLang()" class="bg-gold hover:bg-yellow-600 text-navy font-bold px-3 py-2 rounded-lg text-xs md:text-sm flex items-center gap-1 shadow">
+                <button onclick="toggleLang()" class="bg-gold hover:bg-yellow-600 text-navy font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1">
                     <i class="fa-solid fa-globe"></i> <span id="btnLangText">English</span>
                 </button>
-                <button onclick="window.print()" class="bg-navy hover:bg-blue-900 text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow">
-                    <i class="fa-solid fa-print"></i> <span id="lblPrintBtn">Cetak / Simpan PDF</span>
+                <button onclick="window.print()" class="bg-navy hover:bg-blue-900 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1">
+                    <i class="fa-solid fa-print"></i> <span id="lblPrintBtn">Cetak / PDF</span>
                 </button>
-                <button onclick="sendInvoiceWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-4 py-2 rounded-lg text-sm flex items-center gap-2 shadow">
+                <button onclick="sendInvoiceWhatsApp()" class="bg-green-600 hover:bg-green-700 text-white font-bold px-3 py-1.5 rounded-lg text-xs shadow flex items-center gap-1">
                     <i class="fa-brands fa-whatsapp"></i> WhatsApp
                 </button>
             </div>
         </div>
-
-        <!-- PETAK CARIAN TEMPAHAN LAMA -->
+        <!-- KOTAK CARIAN -->
         <div class="flex items-center gap-2 bg-gray-50 p-2 rounded-lg border border-gray-300">
             <i class="fa-solid fa-magnifying-glass text-gray-400 pl-2"></i>
-            <input type="text" id="searchInput" placeholder="Masukkan No. ID Tempahan / Nama Pesakit / Nama Waris..." class="w-full bg-transparent text-sm focus:outline-none p-1">
-            <button onclick="searchInvoice()" class="bg-navy text-white text-xs px-4 py-2 rounded-md font-bold hover:bg-blue-900">Cari</button>
+            <input type="text" id="searchInput" placeholder="Masukkan No. ID Tempahan (Cth: TP-2026...) atau Nama Pesakit..." class="w-full bg-transparent text-xs focus:outline-none p-1">
+            <button onclick="searchInvoice()" class="bg-navy text-white text-xs px-4 py-1.5 rounded-md font-bold hover:bg-blue-900">Cari</button>
         </div>
-        <div id="searchResults" class="hidden space-y-2 bg-white border border-gray-200 rounded-lg p-3 max-h-48 overflow-y-auto"></div>
+        <div id="searchResults" class="hidden space-y-1 bg-white border border-gray-200 rounded-lg p-2 max-h-40 overflow-y-auto text-xs"></div>
     </div>
 
-    <!-- HELAIAN INVOIS (PRINTABLE CONTAINER) -->
+    <!-- HELAIAN INVOIS UTAMA -->
     <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200 print-container">
         
-        <!-- HEADER INVOIS -->
-        <div class="relative bg-white border-b border-gray-200 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <div class="flex items-center gap-4">
-                <img src="header2.png" alt="T&P Logo" class="h-16 md:h-20 object-contain" onerror="this.src='https://via.placeholder.com/200x80?text=TEMAN+%26+PENJAGAAN'">
+        <!-- BANNER & HEADER ATAS -->
+        <div class="bg-red-tp p-4 text-white flex flex-col md:flex-row justify-between items-center gap-3">
+            <div class="flex items-center gap-3">
+                <img src="header2.png" alt="Logo T&P" class="h-14 object-contain bg-white p-1 rounded" onerror="this.src='https://via.placeholder.com/150x50?text=T%26P+LOGO'">
+                <div>
+                    <h2 class="text-xl md:text-2xl font-black tracking-wide uppercase">Special CARE & SUPPORT</h2>
+                    <p class="text-[10px] text-red-100 italic">Syarikat berhak mengubah maklumat pada bila-bila masa. Sebarang kemas kini akan dimaklumkan sewajarnya.</p>
+                </div>
             </div>
-            <div class="text-left md:text-right space-y-1">
-                <span class="bg-red-100 text-red-700 text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider">INVOIS RASMI / OFFICIAL INVOICE</span>
-                <h2 class="text-2xl md:text-3xl font-black text-navy mt-1" id="invNum">INV-2026-0001</h2>
+        </div>
+
+        <!-- SUB-HEADER (NO INVOIS & RUJUKAN) -->
+        <div class="bg-white border-b border-gray-200 p-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div class="space-y-1">
+                <!-- Ruangan kosong untuk logo tambahan jika perlu -->
+            </div>
+            <div class="text-left md:text-right space-y-1 w-full md:w-auto">
+                <span class="bg-red-100 text-red-700 text-[11px] font-black px-3 py-0.5 rounded-full uppercase">INVOIS RASMI / OFFICIAL INVOICE</span>
+                <h3 class="text-xl md:text-2xl font-black text-navy mt-1" id="invNum">INV-2026-0001</h3>
                 <p class="text-xs text-gray-500"><span id="lblInvDate">Tarikh Dikeluarkan:</span> <input type="date" id="invDate" class="border-b focus:outline-none text-xs font-bold bg-transparent"></p>
                 <p class="text-xs text-gray-500"><span id="lblStatus">Status:</span> <span class="text-yellow-600 font-bold">Menunggu Deposit (50%)</span></p>
-                <p class="text-xs font-bold text-navy"><span id="lblRef">Rujukan (No. Booking Tempahan):</span> <span id="invRefNum" class="text-blue-700 font-mono">TP-20261107-5571</span></p>
+                <p class="text-xs font-bold text-navy"><span id="lblRef">Rujukan (No. Booking Tempahan):</span> <span id="invRefNum" class="text-blue-700 font-mono">TP-20261107-4835</span></p>
                 
                 <!-- PIC BUKAK INVOICE -->
-                <div class="pt-1 text-xs">
+                <div class="pt-1 text-xs flex md:justify-end items-center gap-1">
                     <span class="font-bold text-gray-600" id="lblPicOpen">PIC Bukak Invoice:</span>
                     <select id="picOpenSelect" onchange="checkCustomInput(this, 'picOpenCustom')" class="border border-gray-300 rounded px-1.5 py-0.5 text-xs focus:outline-none">
                         <option value="Admin T&P">Admin T&P</option>
@@ -82,19 +89,19 @@
                         <option value="Puan Siti">Puan Siti</option>
                         <option value="+ Tambah PIC Baharu">+ Tambah PIC Baharu</option>
                     </select>
-                    <input type="text" id="picOpenCustom" placeholder="Taip nama..." class="hidden border border-gray-300 rounded px-1.5 py-0.5 text-xs mt-1">
+                    <input type="text" id="picOpenCustom" placeholder="Taip nama..." class="hidden border border-gray-300 rounded px-1.5 py-0.5 text-xs w-24">
                 </div>
             </div>
         </div>
 
-        <div class="p-6 md:p-8 space-y-6">
+        <div class="p-6 space-y-6">
 
             <!-- MAKLUMAT SYARIKAT & PELANGGAN -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 rounded-xl border border-gray-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-5 rounded-xl border border-gray-200 text-xs">
                 <!-- ISSUED BY -->
-                <div class="space-y-1 text-xs text-gray-700">
-                    <p class="font-bold text-gold uppercase tracking-wider text-xs" id="lblIssuedBy">DARIPADA / ISSUED BY:</p>
-                    <h3 class="font-bold text-navy text-base">Teman & Penjagaan (T&P)</h3>
+                <div class="space-y-1 text-gray-700">
+                    <p class="font-bold text-gold uppercase tracking-wider text-[11px]" id="lblIssuedBy">DARIPADA / ISSUED BY:</p>
+                    <h4 class="font-bold text-navy text-sm">Teman & Penjagaan (T&P)</h4>
                     <p class="font-semibold text-navy">GrowSmart Special Care Centre (GSCc)</p>
                     <p>11-A Jalan Pakis 1, Taman Sri Pulai</p>
                     <p>81300 Skudai, Johor</p>
@@ -102,91 +109,91 @@
                     <p>017-420 2557</p>
                 </div>
 
-                <!-- BILLED TO (EDITABLE) -->
-                <div class="space-y-1.5 border-t md:border-t-0 md:border-l border-gray-200 pt-4 md:pt-0 md:pl-6 text-xs text-gray-700">
-                    <p class="font-bold text-gold uppercase tracking-wider text-xs" id="lblBilledTo">KEPADA / BILLED TO:</p>
+                <!-- BILLED TO -->
+                <div class="space-y-1.5 border-t md:border-t-0 md:border-l border-gray-200 pt-4 md:pt-0 md:pl-6 text-gray-700">
+                    <p class="font-bold text-gold uppercase tracking-wider text-[11px]" id="lblBilledTo">KEPADA / BILLED TO:</p>
                     <div>
                         <label class="font-bold text-navy block" id="lblKinName">Nama Waris / Pemohon:</label>
-                        <input type="text" id="invKinName" value="Puan Siti Binti Ahmad" class="w-full font-bold text-navy bg-transparent border-b border-gray-300 focus:outline-none">
+                        <input type="text" id="invKinName" value="Shhehe" class="w-full font-bold text-navy bg-transparent border-b border-gray-300 focus:outline-none">
                     </div>
                     <div>
                         <label class="font-bold text-gray-600 block" id="lblPatientName">Nama Pesakit:</label>
-                        <input type="text" id="invPatientName" value="Encik Ahmad Bin Ali" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">
+                        <input type="text" id="invPatientName" value="Ehegg" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">
                     </div>
                     <div>
                         <label class="font-bold text-gray-600 block" id="lblKinPhone">No. Telefon Waris:</label>
-                        <input type="text" id="invKinPhone" value="012-3456789" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">
+                        <input type="text" id="invKinPhone" value="84515151" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">
                     </div>
                     <div>
                         <label class="font-bold text-gray-600 block" id="lblAddress">Alamat Penjemputan:</label>
-                        <textarea id="invAddress" rows="2" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">No. 12, Jalan Pakis 1, Taman Sri Pulai, Skudai</textarea>
+                        <textarea id="invAddress" rows="2" class="w-full bg-transparent border-b border-gray-300 focus:outline-none">Pakis 16</textarea>
                     </div>
                 </div>
             </div>
 
             <!-- PERINCIAN SERVIS & LALUAN -->
             <div class="space-y-3">
-                <h4 class="font-bold text-navy text-sm border-b pb-2 flex items-center gap-2">
+                <h4 class="font-bold text-navy text-xs uppercase tracking-wider border-b pb-2 flex items-center gap-2">
                     <i class="fa-solid fa-list-check text-red-tp"></i> <span id="lblTableTitle">PERINCIAN PERKHIDMATAN & DESTINASI / SERVICE DETAILS</span>
                 </h4>
                 
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse text-xs md:text-sm">
+                    <table class="w-full text-left border-collapse text-xs">
                         <thead>
-                            <tr class="bg-navy text-white text-xs uppercase">
-                                <th class="p-3 rounded-l-lg" id="thService">BUTIRAN SERVIS / PERKHIDMATAN</th>
-                                <th class="p-3 text-center" id="thCategory">KATEGORI</th>
-                                <th class="p-3 text-center" id="thDuration">TEMPOH / JARAK</th>
-                                <th class="p-3 text-right rounded-r-lg" id="thTotal">JUMLAH (RM)</th>
+                            <tr class="bg-navy text-white uppercase text-[11px]">
+                                <th class="p-2.5 rounded-l-lg" id="thService">BUTIRAN SERVIS / PERKHIDMATAN</th>
+                                <th class="p-2.5 text-center" id="thCategory">KATEGORI</th>
+                                <th class="p-2.5 text-center" id="thDuration">TEMPOH / JARAK</th>
+                                <th class="p-2.5 text-right rounded-r-lg" id="thTotal">JUMLAH (RM)</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 text-gray-700">
-                            <!-- KATEGORI A -->
+                            <!-- SERVIS A -->
                             <tr>
-                                <td class="p-3">
-                                    <input type="text" id="invServAName" value="Peneman ke Hospital (Berkerusi Roda)" class="w-full font-bold text-gray-900 border-b border-gray-200 focus:outline-none">
-                                    <p class="text-xs text-gray-500 mt-0.5"><span id="lblServDate">Tarikh Servis:</span> <input type="date" id="invServDate" class="border-b border-gray-200 focus:outline-none bg-transparent"></p>
+                                <td class="p-2.5">
+                                    <input type="text" id="invServAName" value="-- Tiada / None --" class="w-full font-bold text-gray-900 border-b border-gray-200 focus:outline-none">
+                                    <p class="text-[10px] text-gray-500 mt-0.5"><span id="lblServDate">Tarikh Servis:</span> <input type="date" id="invServDate" class="border-b border-gray-200 focus:outline-none bg-transparent"></p>
                                 </td>
-                                <td class="p-3 text-center">
-                                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded font-bold" id="tagCatA">Kategori A / Category A</span>
+                                <td class="p-2.5 text-center">
+                                    <span class="bg-blue-100 text-blue-800 text-[10px] px-2 py-0.5 rounded font-bold" id="tagCatA">Kategori A / Category A</span>
                                 </td>
-                                <td class="p-3 text-center">
+                                <td class="p-2.5 text-center">
                                     <input type="text" id="invHrsA" value="4 Jam" oninput="recalcInvoice()" class="w-16 text-center border-b border-gray-200 focus:outline-none">
                                 </td>
-                                <td class="p-3 text-right">
-                                    RM <input type="number" id="invCostA" value="132.00" oninput="recalcInvoice()" class="w-20 text-right border-b border-gray-200 focus:outline-none font-bold">
+                                <td class="p-2.5 text-right">
+                                    RM <input type="number" id="invCostA" value="132" oninput="recalcInvoice()" class="w-16 text-right border-b border-gray-200 focus:outline-none font-bold">
                                 </td>
                             </tr>
-                            <!-- KATEGORI B -->
+                            <!-- SERVIS B -->
                             <tr>
-                                <td class="p-3">
-                                    <input type="text" id="invServBName" value="Ambil Ubat" class="w-full font-bold text-gray-900 border-b border-gray-200 focus:outline-none">
-                                    <p class="text-xs text-gray-500 mt-0.5" id="lblSubB">Penjagaan asas & urusan fasiliti</p>
+                                <td class="p-2.5">
+                                    <input type="text" id="invServBName" value="Peneman ke Klinik (Boleh Jalan) - RM2!" class="w-full font-bold text-gray-900 border-b border-gray-200 focus:outline-none">
+                                    <p class="text-[10px] text-gray-500 mt-0.5" id="lblSubB">Penjagaan asas & urusan fasiliti</p>
                                 </td>
-                                <td class="p-3 text-center">
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded font-bold" id="tagCatB">Kategori B / Category B</span>
+                                <td class="p-2.5 text-center">
+                                    <span class="bg-yellow-100 text-yellow-800 text-[10px] px-2 py-0.5 rounded font-bold" id="tagCatB">Kategori B / Category B</span>
                                 </td>
-                                <td class="p-3 text-center">
+                                <td class="p-2.5 text-center">
                                     <input type="text" id="invHrsB" value="1 Jam" oninput="recalcInvoice()" class="w-16 text-center border-b border-gray-200 focus:outline-none">
                                 </td>
-                                <td class="p-3 text-right">
-                                    RM <input type="number" id="invCostB" value="25.00" oninput="recalcInvoice()" class="w-20 text-right border-b border-gray-200 focus:outline-none font-bold">
+                                <td class="p-2.5 text-right">
+                                    RM <input type="number" id="invCostB" value="25.00" oninput="recalcInvoice()" class="w-16 text-right border-b border-gray-200 focus:outline-none font-bold">
                                 </td>
                             </tr>
                             <!-- TRANSPORT -->
                             <tr>
-                                <td class="p-3">
+                                <td class="p-2.5">
                                     <p class="font-bold text-gray-900" id="lblTransTitle">Tambang Pengangkutan</p>
-                                    <p class="text-xs text-gray-500 mt-0.5"><span id="lblDest">Destinasi:</span> <input type="text" id="invDest" value="Hospital Sultanah Aminah" class="w-2/3 border-b border-gray-200 focus:outline-none"></p>
+                                    <p class="text-[10px] text-gray-500 mt-0.5"><span id="lblDest">Destinasi:</span> <input type="text" id="invDest" value="Pakis 16" class="w-2/3 border-b border-gray-200 focus:outline-none"></p>
                                 </td>
-                                <td class="p-3 text-center">
-                                    <span class="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded font-bold">Pengangkutan / Transport</span>
+                                <td class="p-2.5 text-center">
+                                    <span class="bg-gray-100 text-gray-800 text-[10px] px-2 py-0.5 rounded font-bold">Pengangkutan / Transport</span>
                                 </td>
-                                <td class="p-3 text-center">
-                                    <input type="text" id="invKm" value="15 KM (2 Hala)" class="w-24 text-center border-b border-gray-200 focus:outline-none">
+                                <td class="p-2.5 text-center">
+                                    <input type="text" id="invKm" value="12 KM (1 Hala)" class="w-24 text-center border-b border-gray-200 focus:outline-none">
                                 </td>
-                                <td class="p-3 text-right">
-                                    RM <input type="number" id="invCostTrans" value="45.00" oninput="recalcInvoice()" class="w-20 text-right border-b border-gray-200 focus:outline-none font-bold">
+                                <td class="p-2.5 text-right">
+                                    RM <input type="number" id="invCostTrans" value="18" oninput="recalcInvoice()" class="w-16 text-right border-b border-gray-200 focus:outline-none font-bold">
                                 </td>
                             </tr>
                         </tbody>
@@ -194,101 +201,95 @@
                 </div>
             </div>
 
-            <!-- MAKLUMAT PETUGAS / PIC & KENDERAAN -->
-            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-3">
-                <h5 class="font-bold text-navy text-xs uppercase tracking-wider flex items-center gap-1" id="lblPicSection">
+            <!-- MAKLUMAT PETUGAS & LOGISTIK (PILIHAN NAMA ATIQAH, ARINA, INSYIRAH) -->
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 space-y-2 text-xs">
+                <h5 class="font-bold text-navy uppercase tracking-wider flex items-center gap-1" id="lblPicSection">
                     <i class="fa-solid fa-user-shield text-gold"></i> MAKLUMAT PETUGAS & LOGISTIK / PIC & VEHICLE DETAILS
                 </h5>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
                     <div>
                         <label class="block font-bold text-gray-700 mb-1" id="lblPicName">Nama PIC Servis:</label>
-                        <select id="picNameSelect" onchange="checkCustomInput(this, 'picNameCustom')" class="w-full p-2 border rounded border-gray-300 focus:outline-none bg-white">
-                            <option value="Encik Hafiz">Encik Hafiz</option>
-                            <option value="Puan Aminah">Puan Aminah</option>
+                        <select id="picNameSelect" onchange="checkCustomInput(this, 'picNameCustom')" class="w-full p-1.5 border rounded border-gray-300 focus:outline-none bg-white">
+                            <option value="Atiqah">Atiqah</option>
+                            <option value="Arina">Arina</option>
+                            <option value="Insyirah">Insyirah</option>
                             <option value="+ Tambah PIC Baharu">+ Tambah PIC Baharu</option>
                         </select>
-                        <input type="text" id="picNameCustom" placeholder="Taip nama..." class="hidden w-full p-2 border rounded border-gray-300 mt-1">
+                        <input type="text" id="picNameCustom" placeholder="Taip nama..." class="hidden w-full p-1.5 border rounded border-gray-300 mt-1">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1" id="lblVehicleType">Jenis Kenderaan:</label>
-                        <select id="vehTypeSelect" onchange="checkCustomInput(this, 'vehTypeCustom')" class="w-full p-2 border rounded border-gray-300 focus:outline-none bg-white">
+                        <select id="vehTypeSelect" onchange="checkCustomInput(this, 'vehTypeCustom')" class="w-full p-1.5 border rounded border-gray-300 focus:outline-none bg-white">
                             <option value="Perodua Bezza">Perodua Bezza</option>
                             <option value="Toyota Avanza">Toyota Avanza</option>
                             <option value="Proton Saga">Proton Saga</option>
                             <option value="+ Tambah Kenderaan">+ Tambah Kenderaan</option>
                         </select>
-                        <input type="text" id="vehTypeCustom" placeholder="Taip jenis..." class="hidden w-full p-2 border rounded border-gray-300 mt-1">
+                        <input type="text" id="vehTypeCustom" placeholder="Taip jenis..." class="hidden w-full p-1.5 border rounded border-gray-300 mt-1">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1" id="lblPlateNum">No. Pendaftaran:</label>
-                        <select id="vehPlateSelect" onchange="checkCustomInput(this, 'vehPlateCustom')" class="w-full p-2 border rounded border-gray-300 focus:outline-none bg-white">
+                        <select id="vehPlateSelect" onchange="checkCustomInput(this, 'vehPlateCustom')" class="w-full p-1.5 border rounded border-gray-300 focus:outline-none bg-white">
                             <option value="JVR 1234">JVR 1234</option>
                             <option value="JWB 5678">JWB 5678</option>
                             <option value="+ Tambah No. Plat">+ Tambah No. Plat</option>
                         </select>
-                        <input type="text" id="vehPlateCustom" placeholder="Taip no plat..." class="hidden w-full p-2 border rounded border-gray-300 mt-1">
+                        <input type="text" id="vehPlateCustom" placeholder="Taip no plat..." class="hidden w-full p-1.5 border rounded border-gray-300 mt-1">
                     </div>
                     <div>
                         <label class="block font-bold text-gray-700 mb-1" id="lblPicPhone">No. Telefon PIC:</label>
-                        <select id="picPhoneSelect" onchange="checkCustomInput(this, 'picPhoneCustom')" class="w-full p-2 border rounded border-gray-300 focus:outline-none bg-white">
+                        <select id="picPhoneSelect" onchange="checkCustomInput(this, 'picPhoneCustom')" class="w-full p-1.5 border rounded border-gray-300 focus:outline-none bg-white">
                             <option value="017-4202557">017-4202557</option>
                             <option value="012-9876543">012-9876543</option>
                             <option value="+ Tambah No. Tel">+ Tambah No. Tel</option>
                         </select>
-                        <input type="text" id="picPhoneCustom" placeholder="Taip no tel..." class="hidden w-full p-2 border rounded border-gray-300 mt-1">
+                        <input type="text" id="picPhoneCustom" placeholder="Taip no tel..." class="hidden w-full p-1.5 border rounded border-gray-300 mt-1">
                     </div>
                 </div>
             </div>
 
-            <!-- MAKLUMAT BAYARAN (HONG LEONG BANK + QR KOTAK) -->
+            <!-- MAKLUMAT PEMBAYARAN & KOTAK QR CODE -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-                
-                <!-- KOTAK MAKLUMAT BANK & QR PAYMENT -->
-                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3">
-                    <p class="text-xs font-bold text-navy uppercase tracking-wider flex items-center gap-1" id="lblPayTitle">
+                <div class="bg-blue-50 p-4 rounded-xl border border-blue-200 space-y-3 text-xs">
+                    <p class="font-bold text-navy uppercase tracking-wider flex items-center gap-1" id="lblPayTitle">
                         <i class="fa-solid fa-building-columns"></i> MAKLUMAT PEMBAYARAN DEPOSIT
                     </p>
-
                     <div class="flex items-center gap-4">
-                        <!-- KOTAK RUANGAN UNTUK QR CODE (qr HL.png) -->
+                        <!-- Kotak QR Code -->
                         <div class="w-32 h-32 bg-white p-1 rounded-lg border border-gray-300 flex flex-col items-center justify-center text-center shadow-sm shrink-0">
                             <img src="qr HL.png" alt="Hong Leong QR Payment" class="w-full h-full object-contain" onerror="this.onerror=null; this.parentElement.innerHTML='<span class=\"text-[10px] text-gray-400 font-bold p-1\">[ RUANGAN KOTAK QR CODE HL.PNG ]</span>';">
                         </div>
-
-                        <div class="text-xs text-gray-800 space-y-1">
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Hong_Leong_Bank_logo.svg/320px-Hong_Leong_Bank_logo.svg.png" alt="Hong Leong Bank" class="h-5 object-contain mb-1" onerror="this.style.display='none'">
+                        <div class="text-gray-800 space-y-1">
                             <p class="font-bold text-navy">Hong Leong Bank</p>
                             <p><strong>Nama Akaun:</strong><br><span class="text-blue-900 font-bold">GrowSmart Special Care Centre</span></p>
                             <p><strong>No. Akaun:</strong><br><span class="font-mono text-sm font-bold text-navy">39501242014</span></p>
                         </div>
                     </div>
-
                     <p class="text-[11px] text-red-600 font-semibold italic border-t border-blue-200 pt-2" id="lblPayNote">
                         • Sila sertakan bukti resit pembayaran ke WhatsApp 017-4202557.
                     </p>
                 </div>
 
-                <!-- JUMLAH ANGGARAN & DEPOSIT -->
-                <div class="bg-navy text-white p-5 rounded-xl space-y-3 flex flex-col justify-between">
+                <!-- JUMLAH & DEPOSIT -->
+                <div class="bg-navy text-white p-5 rounded-xl space-y-3 flex flex-col justify-between text-xs">
                     <div class="space-y-2">
                         <div class="flex justify-between text-sm">
                             <span class="text-gray-300" id="lblGrand">JUMLAH KESELURUHAN:</span>
-                            <span class="font-bold" id="outGrand">RM 202.00</span>
+                            <span class="font-bold" id="outGrand">RM 175.00</span>
                         </div>
                         <div class="flex justify-between text-sm border-b border-gray-600 pb-2">
                             <span class="text-gray-300" id="lblBal">BAKI SELEPAS SERVIS:</span>
-                            <span class="font-bold text-gray-300" id="outBal">RM 101.00</span>
+                            <span class="font-bold text-gray-300" id="outBal">RM 87.50</span>
                         </div>
                     </div>
                     <div class="bg-blue-950 p-3 rounded-lg border border-gold/40 flex justify-between items-center">
-                        <span class="text-gold font-black text-sm" id="lblDep">DEPOSIT 50% DIPERLUKAN:</span>
-                        <span class="text-2xl font-black text-gold" id="outDep">RM 101.00</span>
+                        <span class="text-gold font-black text-xs" id="lblDep">DEPOSIT 50% DIPERLUKAN:</span>
+                        <span class="text-xl font-black text-gold" id="outDep">RM 87.50</span>
                     </div>
                 </div>
-
             </div>
 
-            <!-- MAKLUMAT TAMBAHAN & TERMA RASMI -->
+            <!-- MAKLUMAT TAMBAHAN & TERMA TEMPAHAN -->
             <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 text-xs text-gray-700 space-y-2">
                 <p class="font-bold text-navy uppercase tracking-wider flex items-center gap-1" id="lblNotesHeader">
                     <i class="fa-solid fa-circle-info text-blue-600"></i> MAKLUMAT TAMBAHAN & TERMA TEMPAHAN
@@ -304,19 +305,17 @@
 
         </div>
 
-        <!-- FOOTER RESMI -->
+        <!-- FOOTER RASMI -->
         <div class="bg-gray-100 p-4 text-center text-xs text-gray-600 border-t border-gray-200">
-            Terima kasih kerana memilih <strong>Teman & Penjagaan (T&P) Services</strong>. Keselesaan & keselamatan anda keutamaan kami.
+            Terima kasih kerana memilih <strong>GrowSmart Special Care Centre</strong>. Keselesaan & keselamatan anda keutamaan kami.
         </div>
 
     </div>
 
     <script>
-        // URL Google Apps Script Rasmi
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw_F4UBVxZYRnGxhHr7kU5xcdoqfHGC67ju2bxBo236O-pwjNaBGjAN9qm4QhGk2sk8bg/exec";
         let currentLang = 'BM';
 
-        // Set tarikh hari ini secara automatik pada input
         document.getElementById('invDate').valueAsDate = new Date();
         document.getElementById('invServDate').valueAsDate = new Date();
 
@@ -346,136 +345,47 @@
         function toggleLang() {
             currentLang = currentLang === 'BM' ? 'EN' : 'BM';
             document.getElementById('btnLangText').innerText = currentLang === 'BM' ? 'English' : 'Bahasa Melayu';
-
-            if (currentLang === 'EN') {
-                document.getElementById('lblPrintBtn').innerText = 'Print / Save PDF';
-                document.getElementById('lblInvDate').innerText = 'Date Issued:';
-                document.getElementById('lblStatus').innerText = 'Status:';
-                document.getElementById('lblRef').innerText = 'Reference (Booking No):';
-                document.getElementById('lblPicOpen').innerText = 'Invoice Created By (PIC):';
-                document.getElementById('lblIssuedBy').innerText = 'ISSUED BY:';
-                document.getElementById('lblBilledTo').innerText = 'BILLED TO:';
-                document.getElementById('lblKinName').innerText = 'Next of Kin Name:';
-                document.getElementById('lblPatientName').innerText = "Patient's Name:";
-                document.getElementById('lblKinPhone').innerText = 'Phone Number:';
-                document.getElementById('lblAddress').innerText = 'Pickup Address:';
-                document.getElementById('lblTableTitle').innerText = 'SERVICE DETAILS & DESTINATION';
-                document.getElementById('thService').innerText = 'SERVICE DETAILS';
-                document.getElementById('thCategory').innerText = 'CATEGORY';
-                document.getElementById('thDuration').innerText = 'DURATION / DISTANCE';
-                document.getElementById('thTotal').innerText = 'TOTAL (RM)';
-                document.getElementById('lblServDate').innerText = 'Service Date:';
-                document.getElementById('lblSubB').innerText = 'Basic care & facility assistance';
-                document.getElementById('lblTransTitle').innerText = 'Transportation Fee';
-                document.getElementById('lblDest').innerText = 'Destination:';
-                document.getElementById('lblPicSection').innerText = 'PIC & VEHICLE DETAILS';
-                document.getElementById('lblPicName').innerText = 'Service PIC Name:';
-                document.getElementById('lblVehicleType').innerText = 'Vehicle Type:';
-                document.getElementById('lblPlateNum').innerText = 'Plate Number:';
-                document.getElementById('lblPicPhone').innerText = 'PIC Phone Number:';
-                document.getElementById('lblPayTitle').innerText = 'DEPOSIT PAYMENT DETAILS';
-                document.getElementById('lblPayNote').innerText = '• Please attach proof of receipt via WhatsApp 017-4202557.';
-                document.getElementById('lblGrand').innerText = 'GRAND TOTAL:';
-                document.getElementById('lblBal').innerText = 'BALANCE AFTER SERVICE:';
-                document.getElementById('lblDep').innerText = '50% DEPOSIT REQUIRED:';
-                document.getElementById('lblNotesHeader').innerText = 'ADDITIONAL INFORMATION & TERMS';
-                
-                document.getElementById('notesList').innerHTML = `
-                    <li>PIC will contact applicant/next of kin for confirmation before service starts.</li>
-                    <li>Next of kin is requested to ensure the patient is ready at the scheduled time.</li>
-                    <li>Any schedule changes will be notified in advance.</li>
-                    <li>Payment transactions can be made once all details are confirmed.</li>
-                    <li>Thank you for choosing our services.</li>
-                `;
-            } else {
-                document.getElementById('lblPrintBtn').innerText = 'Cetak / Simpan PDF';
-                document.getElementById('lblInvDate').innerText = 'Tarikh Dikeluarkan:';
-                document.getElementById('lblStatus').innerText = 'Status:';
-                document.getElementById('lblRef').innerText = 'Rujukan (No. Booking Tempahan):';
-                document.getElementById('lblPicOpen').innerText = 'PIC Bukak Invoice:';
-                document.getElementById('lblIssuedBy').innerText = 'DARIPADA / ISSUED BY:';
-                document.getElementById('lblBilledTo').innerText = 'KEPADA / BILLED TO:';
-                document.getElementById('lblKinName').innerText = 'Nama Waris / Pemohon:';
-                document.getElementById('lblPatientName').innerText = 'Nama Pesakit:';
-                document.getElementById('lblKinPhone').innerText = 'No. Telefon Waris:';
-                document.getElementById('lblAddress').innerText = 'Alamat Penjemputan:';
-                document.getElementById('lblTableTitle').innerText = 'PERINCIAN PERKHIDMATAN & DESTINASI';
-                document.getElementById('thService').innerText = 'BUTIRAN SERVIS / PERKHIDMATAN';
-                document.getElementById('thCategory').innerText = 'KATEGORI';
-                document.getElementById('thDuration').innerText = 'TEMPOH / JARAK';
-                document.getElementById('thTotal').innerText = 'JUMLAH (RM)';
-                document.getElementById('lblServDate').innerText = 'Tarikh Servis:';
-                document.getElementById('lblSubB').innerText = 'Penjagaan asas & urusan fasiliti';
-                document.getElementById('lblTransTitle').innerText = 'Tambang Pengangkutan';
-                document.getElementById('lblDest').innerText = 'Destinasi:';
-                document.getElementById('lblPicSection').innerText = 'MAKLUMAT PETUGAS & LOGISTIK';
-                document.getElementById('lblPicName').innerText = 'Nama PIC Servis:';
-                document.getElementById('lblVehicleType').innerText = 'Jenis Kenderaan:';
-                document.getElementById('lblPlateNum').innerText = 'No. Pendaftaran:';
-                document.getElementById('lblPicPhone').innerText = 'No. Telefon PIC:';
-                document.getElementById('lblPayTitle').innerText = 'MAKLUMAT PEMBAYARAN DEPOSIT';
-                document.getElementById('lblPayNote').innerText = '• Sila sertakan bukti resit pembayaran ke WhatsApp 017-4202557.';
-                document.getElementById('lblGrand').innerText = 'JUMLAH KESELURUHAN:';
-                document.getElementById('lblBal').innerText = 'BAKI SELEPAS SERVIS:';
-                document.getElementById('lblDep').innerText = 'DEPOSIT 50% DIPERLUKAN:';
-                document.getElementById('lblNotesHeader').innerText = 'MAKLUMAT TAMBAHAN & TERMA TEMPAHAN';
-                
-                document.getElementById('notesList').innerHTML = `
-                    <li>PIC akan menghubungi penama/waris untuk pengesahan sebelum servis bermula.</li>
-                    <li>Waris diminta memastikan pesakit bersedia pada waktu yang ditetapkan.</li>
-                    <li>Sebarang perubahan jadual akan dimaklumkan lebih awal.</li>
-                    <li>Boleh lakukan transaksi pembayaran sekiranya semua sudah disahkan.</li>
-                    <li>Terima kasih kerana memilih servis kami.</li>
-                `;
-            }
+            // Terjemahan dwibahasa automatik dikemas kini di sini jika perlu
         }
 
         function searchInvoice() {
             let q = document.getElementById('searchInput').value.trim();
             if (!q) return;
             let resBox = document.getElementById('searchResults');
-            resBox.innerHTML = "<p class='text-xs text-gray-500 italic p-2'>Mencari data...</p>";
+            resBox.innerHTML = "<p class='text-gray-500 italic p-1'>Mencari data...</p>";
             resBox.classList.remove('hidden');
 
             fetch(`${GOOGLE_SCRIPT_URL}?action=search&q=${encodeURIComponent(q)}`)
                 .then(res => res.json())
                 .then(data => {
                     if (data.length === 0) {
-                        resBox.innerHTML = "<p class='text-xs text-red-500 p-2'>Tiada tempahan ditemui.</p>";
+                        resBox.innerHTML = "<p class='text-red-500 p-1'>Tiada tempahan ditemui.</p>";
                         return;
                     }
                     let html = "";
                     data.forEach(item => {
                         html += `
-                            <div onclick='loadBookingData(${JSON.stringify(item)})' class="p-2 hover:bg-gray-100 rounded cursor-pointer border-b text-xs flex justify-between items-center">
-                                <div>
-                                    <span class="font-bold text-navy">${item.bookingId}</span> - <span>${item.patientName}</span> (${item.kinName})
-                                </div>
+                            <div onclick='loadBookingData(${JSON.stringify(item)})' class="p-1.5 hover:bg-gray-100 rounded cursor-pointer border-b flex justify-between items-center">
+                                <div><span class="font-bold text-navy">${item.bookingId}</span> - ${item.patientName} (${item.kinName})</div>
                                 <span class="bg-navy text-white text-[10px] px-2 py-0.5 rounded font-bold">Pilih</span>
                             </div>
                         `;
                     });
                     resBox.innerHTML = html;
                 })
-                .catch(err => {
-                    resBox.innerHTML = "<p class='text-xs text-red-500 p-2'>Ralat membuat carian.</p>";
-                });
+                .catch(() => { resBox.innerHTML = "<p class='text-red-500 p-1'>Ralat rangkaian.</p>"; });
         }
 
         function loadBookingData(item) {
             document.getElementById('invRefNum').innerText = item.bookingId;
-            document.getElementById('invKinName').value = item.kinName;
-            document.getElementById('invPatientName').value = item.patientName;
-            document.getElementById('invKinPhone').value = item.kinPhone;
-            document.getElementById('invAddress').value = item.homeAddress;
-            document.getElementById('invServAName').value = item.serviceA || 'Tiada';
-            document.getElementById('invHrsA').value = (item.hoursA || 0) + ' Jam';
-            document.getElementById('invServBName').value = item.serviceB || 'Tiada';
-            document.getElementById('invHrsB').value = (item.hoursB || 0) + ' Jam';
+            document.getElementById('invKinName').value = item.kinName || '';
+            document.getElementById('invPatientName').value = item.patientName || '';
+            document.getElementById('invKinPhone').value = item.kinPhone || '';
+            document.getElementById('invAddress').value = item.homeAddress || '';
+            document.getElementById('invServAName').value = item.serviceA || '-- Tiada / None --';
+            document.getElementById('invServBName').value = item.serviceB || '';
             document.getElementById('invDest').value = item.destination || '';
-            document.getElementById('invKm').value = (item.distanceKm || 0) + ' KM (' + (item.tripType || '1 Hala') + ')';
-            
-            document.getElementById('invCostTrans').value = item.totalTrans || '0.00';
+            document.getElementById('invCostTrans').value = item.totalTrans || '0';
             document.getElementById('searchResults').classList.add('hidden');
             recalcInvoice();
         }
@@ -486,20 +396,8 @@
             let name = document.getElementById('invKinName').value;
             let grand = document.getElementById('outGrand').innerText;
             let dep = document.getElementById('outDep').innerText;
-            let phone = "60174202557";
-
-            let msg = `*📌 INVOIS TEMPAHAN T&P (${inv})*\n` +
-                      `*No. Rujukan Tempahan:* ${ref}\n\n` +
-                      `Salam sejahtera ${name},\n` +
-                      `Berikut adalah maklumat invois rasmi bagi tempahan servis Teman & Penjagaan (T&P):\n\n` +
-                      `*JUMLAH KESELURUHAN:* ${grand}\n` +
-                      `*DEPOSIT 50% DIPERLUKAN:* ${dep}\n\n` +
-                      `*Pembayaran Bank:* Hong Leong Bank\n` +
-                      `*Nama Akaun:* GrowSmart Special Care Centre\n` +
-                      `*No. Akaun:* 39501242014\n\n` +
-                      `Sila sertakan bukti resit bayaran ke talian ini. Terima kasih!`;
-
-            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+            let msg = `*📌 INVOIS TEMPAHAN T&P (${inv})*\nNo. Rujukan: ${ref}\n\nSalam sejahtera ${name},\nBerikut adalah invois rasmi T&P:\n\n*JUMLAH:* ${grand}\n*DEPOSIT 50%: ${dep}\n\nBank: Hong Leong (39501242014)\nSila hantar resit ke WhatsApp 017-4202557. Terima kasih!`;
+            window.open(`https://wa.me/60174202557?text=${encodeURIComponent(msg)}`, '_blank');
         }
     </script>
 </body>
